@@ -36,6 +36,6 @@ if st.button("Generate Image"):
     if prompt:
         image = generate_image(prompt)
         if image:
-            st.image(image, caption="Generated Image", use_column_width=True)
+            st.image(image, caption="Generated Image", use_container_width=True)
     else:
         st.warning("Please enter a prompt!")
