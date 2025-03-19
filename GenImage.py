@@ -6,8 +6,7 @@ from io import BytesIO
 import base64
 
 # Cấu hình API
-API_KEY = "AIzaSyApnSpZVliqfTKmhfEOu66kczAbsvyPslQ"
-genai.configure(api_key=API_KEY)
+client = genai.Client(api_key='AIzaSyApnSpZVliqfTKmhfEOu66kczAbsvyPslQ')
 
 def generate_image(prompt):
     try:
