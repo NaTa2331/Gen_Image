@@ -1,0 +1,6 @@
+streamlit
+google
+google-genai
+PIL
+io
+base64
