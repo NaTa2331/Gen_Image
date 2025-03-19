@@ -5,11 +5,10 @@ from PIL import Image
 from io import BytesIO
 import base64
 
-# Cấu hình API
-client = genai.Client(api_key='AIzaSyApnSpZVliqfTKmhfEOu66kczAbsvyPslQ')
 
 def generate_image(prompt):
     try:
+        client = genai.Client(api_key='AIzaSyApnSpZVliqfTKmhfEOu66kczAbsvyPslQ')
         response = client.models.generate_content(
             model="gemini-2.0-flash-exp-image-generation",
             contents=prompt,
@@ -17,18 +16,17 @@ def generate_image(prompt):
                 response_modalities=['Text', 'Image']
             )
         )
-
+        
         for part in response.candidates[0].content.parts:
             if part.text is not None:
-                print(part.text)
+                st.write(part.text)
             elif part.inline_data is not None:
                 image_data = part.inline_data.data
                 image = Image.open(BytesIO(image_data))
-                image.save('gemini-native-image.png')
-                image.show()
-
+                return image
     except Exception as e:
-        print(f"An error occurred: {e}")
+        st.error(f"Error: {e}")
+        return None
 
 # Giao diện Streamlit
 st.title("Gemini Image Generator")
