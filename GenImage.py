@@ -10,7 +10,6 @@ client = genai.Client(api_key='AIzaSyApnSpZVliqfTKmhfEOu66kczAbsvyPslQ')
 
 def generate_image(prompt):
     try:
-        client = genai.Client()
         response = client.models.generate_content(
             model="gemini-2.0-flash-exp-image-generation",
             contents=prompt,
@@ -18,17 +17,18 @@ def generate_image(prompt):
                 response_modalities=['Text', 'Image']
             )
         )
-        
+
         for part in response.candidates[0].content.parts:
             if part.text is not None:
-                st.write(part.text)
+                print(part.text)
             elif part.inline_data is not None:
                 image_data = part.inline_data.data
                 image = Image.open(BytesIO(image_data))
-                return image
+                image.save('gemini-native-image.png')
+                image.show()
+
     except Exception as e:
-        st.error(f"Error: {e}")
-        return None
+        print(f"An error occurred: {e}")
 
 # Giao diện Streamlit
 st.title("Gemini Image Generator")
